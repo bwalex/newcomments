@@ -3,6 +3,8 @@ Bundler.require(:default)
 
 require 'fileutils'
 
+require './models/users'
+
 ActiveRecord::Base.establish_connection(YAML::load(File.open('config/database.yml')))
 ActiveRecord::Base.logger = Logger.new(File.open('database.rakefile.log', 'w'))
 

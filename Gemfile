@@ -18,7 +18,7 @@ gem "mysql2",    "~> 0.3.14"
 gem "logger", "~> 1.2.8"
 
 gem "sanitize", "~> 2.0.6"
-gem "bcrypt-ruby", "~> 3.1.2"
+gem "bcrypt-ruby", "~> 3.1.2", :require => "bcrypt"
 
 gem "sinatra", "~> 1.4.4"
 gem "grape",   "~> 0.6.1"

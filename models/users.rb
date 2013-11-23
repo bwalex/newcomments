@@ -1,16 +1,18 @@
 require 'bundler'
 Bundler.require(:default)
 
-require "../helpers/email_validator"
-require "./sites"
+require 'digest/md5'
+
+require_relative "../helpers/email_validator"
+require_relative "sites"
 
 class User < ActiveRecord::Base
   attr_accessor :new_password, :new_password_confirmation
   attr_accessor :remove_password
 
   has_many :site_users
-  has_many :sites, :through => :site_users,
-                   :uniq => true
+  has_many :sites, -> { where uniq: true },
+                   :through => :site_users
 
   validates :email, :presence => true, :uniqueness => true, :email => true
   validates_confirmation_of :new_password, :if => :password_changed?

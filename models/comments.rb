@@ -1,7 +1,7 @@
 require 'bundler'
 Bundler.require(:default)
 
-require './articles'
+require_relative 'articles'
 
 class Comment < ActiveRecord::Base
   attr_accessor :request

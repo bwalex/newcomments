@@ -1,8 +1,8 @@
 require 'bundler'
 Bundler.require(:default)
 
-require './sites'
-require './comments'
+require_relative 'sites'
+require_relative 'comments'
 
 class Article < ActiveRecord::Base
   belongs_to  :site
