@@ -7,6 +7,7 @@ class Web < Sinatra::Base
     ActiveRecord::Base.connection_pool.connections.map(&:verify!)
   end
 
+
   get '/' do
     "Hello world."
   end
