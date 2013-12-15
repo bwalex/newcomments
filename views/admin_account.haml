@@ -1,0 +1,23 @@
+.row
+  .small-8.small-centered.columns
+    %nav.breadcrumbs
+      %a.current{ :href => "/admin/account" } My account
+
+.row
+  .small-8.small-centered.columns
+    - if flash.has?(:error)
+      .alert-box.alert
+        = flash[:error]
+    - if flash.has?(:success)
+      .alert-box.success
+        = flash[:success]
+
+.row
+  .small-8.small-centered.columns
+    %h2 Account
+    %form{ :method => "post", :action => "/admin/account" }
+      %label New password
+      %input{ :type => "password", :name => "new_password", :placeholder => ""}
+      %label Confirm new password
+      %input{ :type => "password", :name => "new_password_confirmation", :placeholder => ""}
+      %input.button.small{ :type => "submit", :value => "Change password" }

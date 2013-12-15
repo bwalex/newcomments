@@ -1,14 +1,16 @@
 require 'bundler'
 Bundler.require(:default)
 
+require 'time'
+
 require_relative 'articles'
 
 class Comment < ActiveRecord::Base
   attr_accessor :request
   belongs_to    :article
 
-  validates :email, :presence => true, :email => true
-  validates :name, :length => { :in => 2..255 }
+  validates :email, :presence => true, :email => true, :length => { :in => 2..70 }
+  validates :name, :length => { :in => 2..60 }
   validates :comment, :length => { :minimum => 2 }
 
   before_save   :hash_mail
@@ -25,7 +27,7 @@ class Comment < ActiveRecord::Base
   end
 
   def hash_mail
-    self[:hashed_mail] = Digest::MD5.hexdigest(self[:email].strip.downcase)
+    self[:hashed_email] = Digest::MD5.hexdigest(self[:email].strip.downcase)
     return true
   end
 
@@ -34,11 +36,28 @@ class Comment < ActiveRecord::Base
     return true
   end
 
-  def human_created_at
-    return (self[:created_at] != nil) ? self[:created_at].strftime("%d/%m/%Y - %H:%M") : nil
+  def created_at
+    (self[:created_at] != nil) ? self[:created_at].iso8601 : nil
   end
 
-  def human_updated_at
-    return (self[:updated_at] != nil) ? self[:updated_at].strftime("%d/%m/%Y - %H:%M") : nil
+  def created_at_raw
+    self[:created_at]
+  end
+
+  def as_json(options={})
+    only = [
+      :name,
+      :email_hashed,
+      :comment,
+      :created_at
+    ]
+
+    methods = [
+    ]
+
+    super(
+      :only => only,
+      :methods => methods
+    )
   end
 end

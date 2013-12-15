@@ -1,0 +1,53 @@
+@import "foundation/functions";
+
+@import "foundation/components/global";
+@import "foundation/components/grid";
+@import "foundation/components/type";
+@import "foundation/components/pagination";
+@import "foundation/components/tabs";
+@import "foundation/components/buttons";
+@import "foundation/components/button-groups";
+@import "foundation/components/forms";
+@import "foundation/components/labels";
+@import "foundation/components/tables";
+@import "foundation/components/inline-lists";
+@import "foundation/components/breadcrumbs";
+@import "foundation/components/alert-boxes";
+@import "foundation/components/top-bar";
+@import "foundation/components/side-nav";
+
+
+header {
+  margin-bottom: 2.5em;
+}
+
+footer {
+  margin-top: 2.5em;
+}
+
+form {
+  margin: 0;
+}
+
+fieldset {
+  padding: 2em;
+}
+
+input[type="checkbox"] {
+  margin: 0;
+}
+
+a.ellipsis {
+  margin-left: 1em;
+}
+
+.alert-box {
+  margin-top: 1em;
+}
+
+.side-nav {
+}
+
+.button.warning {
+  background-color: $warning-color;
+}

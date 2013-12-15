@@ -1,0 +1,33 @@
+!!!
+%html
+  %head
+    %meta(charset="utf-8")
+    %title
+      Comments
+    %link(href="/assets/stylesheets/normalize.css" rel="stylesheet" type="text/css")
+    %link(href="/assets/icons/fonduation-icons.css" rel="stylesheet" type="text/css")
+    %link(href="/assets/stylesheets/style.css" rel="stylesheet" type="text/css")
+  %body
+    %header
+      %nav.top-bar
+        %ul.title-area
+          %li.name
+            %h1
+              %a{ :href => "/" }
+                Comments
+    %section#content
+      .row
+        .small-4.small-centered.columns
+          %fieldset
+            %legend Login
+            %form{ :method => "post", :action => "/login"}
+              - if flash.has?(:error)
+                %input.error{ :type => "text", :name => "email", :placeholder => "Email"}
+                %small.error= flash[:error]
+                %input.error{ :type => "password", :name => "password", :placeholder => "Password"}
+                %small.error= flash[:error]
+              - else
+                %input{ :type => "text", :name => "email", :placeholder => "Email"}
+                %input{ :type => "password", :name => "password", :placeholder => "Password"}
+              %input.button.small{ :type => "submit", :value => "Login"}
+    %footer

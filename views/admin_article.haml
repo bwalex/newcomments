@@ -1,0 +1,81 @@
+.row
+  .small-12.small-centered.columns
+    %nav.breadcrumbs
+      %a{ :href => "/admin/sites" } Sites
+      %a{ :href => "/admin/sites/#{@site.domain}" }= @site.domain
+      %a.current{ :href => "/admin/sites/#{@site.domain}/articles/#{@article.identifier}" }= @article.name
+
+.row
+  .small-12.small-centered.columns
+    - if flash.has?(:error)
+      .alert-box.alert
+        = flash[:error]
+    - if flash.has?(:success)
+      .alert-box.success
+        = flash[:success]
+
+
+.row
+  .small-12.small-centered.columns
+    %h2 Comments
+    %form{ :action => "/admin/sites/#{@site.domain}/articles/#{@article.identifier}/settings", :method => "POST" }
+      - if @article.closed
+        %input{ :type => "hidden", :name => "comments_closed", :value => "false" }
+        %input.button.small.success{ :type => "submit", :value => "Open comments" }
+      - else
+        %input{ :type => "hidden", :name => "comments_closed", :value => "true" }
+        %input.button.small.warning{ :type => "submit", :value => "Close comments" }
+    %form{ :action => "/admin/sites/#{@site.domain}/articles/#{@article.identifier}", :method => "POST" }
+      %table#comment-list
+        %thead
+          %tr
+            %th
+            %th{ :width => "150" } Date posted
+            %th Name
+            %th Email
+            %th IP
+            %th Comment
+        %tbody
+          - for comment in @comments
+            %tr
+              %td
+                %input{ :type => "checkbox", :name => "comment_delete[]", :value => "#{comment.id}" }
+              %td= comment.created_at_raw.strftime("%d/%m/%Y %H:%M")
+              %td= comment.name
+              %td= comment.email
+              %td= comment.ip
+              %td
+                .wrapper= comment.comment
+                %a.ellipsis.fun{ :href => "#" }
+
+      %a#clear-selected.button.small{ :href => "#" } Clear selection
+      %input.button.small.alert{ :type => "submit", :value => "Delete selected" }
+:javascript
+  $(function() {
+    $("#clear-selected").click(function(ev) {
+      $("#comment-list").find(":checked").removeAttr("checked");
+      ev.preventDefault();
+    });
+  
+    $("#comment-list").find(".wrapper").each(function() {
+      var self = this,
+          html = $(this).html(),
+          text = $(this).text();
+      $(this).html(text.substring(0,100));
+      $(this).parent().find(".ellipsis")
+        .text("show original...")
+        .data("shortened", true)
+        .click(function() {
+          if ($(this).data("shortened") === true) {
+            $(self).html(html);
+            $(this).text("show shortened...");
+            $(this).data("shortened", false);
+          } else {
+            $(self).html(text.substring(0,100));
+            $(this).text("show original...");
+            $(this).data("shortened", true);
+          }
+        });
+    });
+    $("#comment-list").dataTable();
+  });

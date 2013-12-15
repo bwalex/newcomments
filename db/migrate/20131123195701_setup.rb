@@ -1,22 +1,25 @@
 class Setup < ActiveRecord::Migration
   def self.up
     create_table :sites do |t|
-      t.string      :name
-      t.string      :url
+      t.string      :domain
+      t.boolean     :closed, default: false
       t.timestamps
     end
 
-    add_index :sites, :name, :unique => true
+    add_index :sites, :domain, :unique => true
 
 
     create_table :articles do |t|
       t.references  :site
       t.string      :name
-      t.string      :hash
+      t.string      :identifier
+      t.string      :url
+      t.boolean     :closed, default: false
+      t.boolean     :hidden, default: false
       t.timestamps
     end
 
-    add_index :articles, :hash, :unique => true
+    add_index :articles, [:site_id, :identifier], :unique => true
     add_foreign_key(:articles, :sites, :dependent => :delete)
 
 
@@ -54,6 +57,16 @@ class Setup < ActiveRecord::Migration
     add_foreign_key(:site_users, :users, :dependent => :delete)
     add_foreign_key(:site_users, :sites, :dependent => :delete)
     add_index :site_users, [:site_id, :user_id], :unique => true
+
+    create_table :subscriptions do |t|
+      t.references :user
+      t.references :site
+      t.timestamps
+    end
+
+    add_foreign_key(:subscriptions, :users, :dependent => :delete)
+    add_foreign_key(:subscriptions, :sites, :dependent => :delete)
+    add_index :subscriptions, [:site_id, :user_id], :unique => true
   end
 
   def self.down
@@ -62,5 +75,6 @@ class Setup < ActiveRecord::Migration
     drop_table :sites
     drop_table :users
     drop_table :site_users
+    drop_table :subscriptions
   end
 end

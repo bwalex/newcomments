@@ -1,0 +1,46 @@
+.row
+  .small-8.small-centered.columns
+    %nav.breadcrumbs
+      %a{ :href => "/admin/sites" } Sites
+      %a{ :href => "/admin/sites/#{@site.domain}" }= @site.domain
+
+.row
+  .small-8.small-centered.columns
+    - if flash.has?(:error)
+      .alert-box.alert
+        = flash[:error]
+    - if flash.has?(:success)
+      .alert-box.success
+        = flash[:success]
+
+.row
+  .small-2.columns
+    %ul.side-nav
+      %li.active
+        %a{ :href => "/admin/sites/#{@site.domain}"} Articles
+      %li
+        %a{ :href => "/admin/sites/#{@site.domain}/preferences"} Preferences
+      - if @user.can? :manage, @site
+        %li
+          %a{ :href => "/admin/sites/#{@site.domain}/settings"} Settings
+        %li
+          %a{ :href => "/admin/sites/#{@site.domain}/users"} Users
+  .small-8.small-centered.columns
+    %h2 Articles
+    %table#article-list
+      %thead
+        %tr
+          %th{ :width => "170"} Last comment date
+          %th Title
+          %th{ :width => "120"} Comment count
+      %tbody
+        - for article in @articles
+          %tr
+            %td= article.updated_at.strftime("%d/%m/%Y %H:%M")
+            %td
+              %a{ :href => "/admin/sites/#{@site.domain}/articles/#{article.identifier}" }
+                = article.name
+            %td.text-right= article.comments.count
+
+:javascript
+  $("#article-list").dataTable();

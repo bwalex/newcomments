@@ -1,0 +1,36 @@
+.row
+  .small-8.small-centered.columns
+    %nav.breadcrumbs
+      %a{ :href => "/admin/sites" } Sites
+      %a{ :href => "/admin/sites/#{@site.domain}" }= @site.domain
+      %a.current{ :href => "/admin/sites/#{@site.domain}/preferences" } Preferences
+
+.row
+  .small-8.small-centered.columns
+    - if flash.has?(:error)
+      .alert-box.alert
+        = flash[:error]
+    - if flash.has?(:success)
+      .alert-box.success
+        = flash[:success]
+
+.row
+  .small-2.columns
+    %ul.side-nav
+      %li
+        %a{ :href => "/admin/sites/#{@site.domain}"} Articles
+      %li.active
+        %a{ :href => "/admin/sites/#{@site.domain}/preferences"} Preferences
+      - if @user.can? :manage, @site
+        %li
+          %a{ :href => "/admin/sites/#{@site.domain}/settings"} Settings
+        %li
+          %a{ :href => "/admin/sites/#{@site.domain}/users"} Users
+  .small-8.small-centered.columns
+    %h2 Preferences
+    %form{ :method => "POST", :action => "/admin/sites/#{@site.domain}/preferences" }
+      %input#email_updates{ :type => "checkbox", :name => "email_updates", :checked => @user.subscribed_to?(@site) || nil }
+      %label.inline{ :for => "email_updates" } Receive email updates
+      .row
+        .small-12.columns
+          %input.button.small{ :type => "submit", :value => "Save changes" }

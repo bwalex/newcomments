@@ -1,0 +1,30 @@
+.row
+  .small-8.small-centered.columns
+    %nav.breadcrumbs
+      %a{ :href => "/admin/sites" } Sites
+
+.row
+  .small-8.small-centered.columns
+    - if flash.has?(:error)
+      .alert-box.alert
+        = flash[:error]
+    - if flash.has?(:success)
+      .alert-box.success
+        = flash[:success]
+
+.row
+  .small-8.small-centered.columns
+    %h2 Sites
+    %ul.no-bullet
+      - for site in @sites
+        %li
+          %a{ :href => "/admin/sites/#{site.domain}/" }
+            = site.domain
+.row
+  .small-8.small-centered.columns
+    %form{ :method => "post", :action => "/admin/sites" }
+      .row.collapse
+        .small-10.columns
+          %input{ :type => "text", :name => "domain", :placeholder => "blog.example.com"}
+        .small-2.columns
+          %input.button.postfix{ :type => "submit", :value => "Add new site" }

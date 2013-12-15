@@ -1,0 +1,46 @@
+.row
+  .small-8.small-centered.columns
+    %nav.breadcrumbs
+      %a.current{ :href => "/admin/global" } Settings
+
+.row
+  .small-8.small-centered.columns
+    - if flash.has?(:error)
+      .alert-box.alert
+        = flash[:error]
+    - if flash.has?(:success)
+      .alert-box.success
+        = flash[:success]
+
+.row
+  .small-8.small-centered.columns
+    %h2 Users
+    %form{ :method => "POST", :action => "/admin/global" }
+      %table#user-list
+        %thead
+          %tr
+            %th Remove
+            %th{ :width => "150" } Date added
+            %th Email
+            %th Privileges
+        %tbody
+          -for user in @users
+            %tr
+              %td
+                %input{ :type => "checkbox", :name => "user_delete[]", :value => "#{user.id}" }
+              %td= user.created_at.strftime("%d/%m/%Y %H:%M")
+              %td= user.email
+              %td
+                %select{ :name => "admin[#{user.id}]" }
+                  %option{ :value => "user", :selected => (not user.is_admin?) || nil } User
+                  %option{ :value => "admin", :selected => user.is_admin? || nil } Admin
+      %input.button.small{ :type => "submit", :value => "Save changes" }
+    %form{ :method => "POST", :action => "/admin/global/users_add" }
+      .row.collapse
+        .small-10.columns
+          %input{ :type => "text", :name => "email", :placeholder => "user@example.com" }
+        .small-2.columns
+          %input.button.postfix{ :type => "submit", :value => "Add new user" }
+
+:javascript
+  $("#user-list").dataTable();

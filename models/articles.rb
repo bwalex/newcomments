@@ -9,7 +9,16 @@ class Article < ActiveRecord::Base
   has_many    :comments
 
   validates_presence_of :name
-  validates_presence_of :hash
+  validates_presence_of :identifier
   validates :name, :length => { :in => 1..255 }
-  validates_uniqueness_of :hash
+  validates_format_of :url, :with => URI::regexp(%w(http https))
+  validates_uniqueness_of :identifier, :scope => :site_id
+
+  def can_comment?
+    not (self[:closed] or self[:hidden] or self.site.closed)
+  end
+
+  def visible?
+    not self[:hidden]
+  end
 end

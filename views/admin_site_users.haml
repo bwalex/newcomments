@@ -1,0 +1,60 @@
+.row
+  .small-8.small-centered.columns
+    %nav.breadcrumbs
+      %a{ :href => "/admin/sites" } Sites
+      %a{ :href => "/admin/sites/#{@site.domain}" }= @site.domain
+      %a.current{ :href => "/admin/sites/#{@site.domain}/users" } Users
+
+.row
+  .small-8.small-centered.columns
+    - if flash.has?(:error)
+      .alert-box.alert
+        = flash[:error]
+    - if flash.has?(:success)
+      .alert-box.success
+        = flash[:success]
+
+.row
+  .small-2.columns
+    %ul.side-nav
+      %li
+        %a{ :href => "/admin/sites/#{@site.domain}"} Articles
+      %li
+        %a{ :href => "/admin/sites/#{@site.domain}/preferences"} Preferences
+      - if @user.can? :manage, @site
+        %li
+          %a{ :href => "/admin/sites/#{@site.domain}/settings"} Settings
+        %li.active
+          %a{ :href => "/admin/sites/#{@site.domain}/users"} Users
+  .small-8.small-centered.columns
+    %h2 Users
+    %form{ :method => "POST", :action => "/admin/sites/#{@site.domain}/users" }
+      %table#user-list
+        %thead
+          %tr
+            %th Remove
+            %th{ :width => "150" } Date added
+            %th Email
+            %th Access Level
+        %tbody
+          -for site_user in @site.site_users
+            %tr
+              %td
+                %input{ :type => "checkbox", :name => "user_delete[]", :value => "#{site_user.id}" }
+              %td= site_user.created_at.strftime("%d/%m/%Y %H:%M")
+              %td= site_user.user.email
+              %td
+                %select{ :name => "access_level[#{site_user.id}]" }
+                  %option{ :value => "1", :selected => (site_user.access_level == 1) || nil } Moderate
+                  %option{ :value => "2", :selected => (site_user.access_level >= 2) || nil } Manage
+
+      %input.button.small{ :type => "submit", :value => "Save changes" }
+    %form{ :method => "POST", :action => "/admin/sites/#{@site.domain}/users_add" }
+      .row.collapse
+        .small-10.columns
+          %input{ :type => "text", :name => "email", :placeholder => "user@example.com" }
+        .small-2.columns
+          %input.button.postfix{ :type => "submit", :value => "Add new user" }
+
+:javascript
+  $("#user-list").dataTable();
