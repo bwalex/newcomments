@@ -2,6 +2,7 @@ require 'bundler'
 Bundler.require(:default)
 
 require_relative 'models/users'
+require_relative 'workers/email_worker'
 
 class Web < Sinatra::Base
   use Rack::Flash

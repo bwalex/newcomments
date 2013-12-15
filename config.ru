@@ -36,6 +36,7 @@ use Rack::Session::Cookie,
   :expire_after => 14400,
   :secret       => SecureRandom.hex(64)
 
+# XXX: temporary hack
 use Rack::Cors do
   allow do
     origins '*'
