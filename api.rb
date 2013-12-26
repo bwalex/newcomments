@@ -56,7 +56,7 @@ class API < Grape::API
 
       begin
         article = Article.find_by_site_id_and_identifier!(site.id, params[:article_identifier])
-        article.visible? ? article.comments.order(:created_at) : []
+        article.visible? ? article.comments.order(:created_at).load : []
       rescue ActiveRecord::RecordNotFound
         []
       end
