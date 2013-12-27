@@ -23,7 +23,6 @@ gem "sanitize", "~> 2.0.6"
 gem "bcrypt-ruby", "~> 3.1.2", :require => "bcrypt"
 
 gem "sinatra",     "~> 1.4.4"
-# XXX: grape doesn't do well with puma...
 gem "grape",       "~> 0.6.1"
 gem "rack-flash3", "~> 1.0.5", :require => "rack-flash"
 
