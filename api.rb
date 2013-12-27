@@ -1,23 +1,16 @@
 require 'bundler'
 Bundler.require(:default)
 
+require_relative 'helpers/grape_ar'
 require_relative 'helpers/recaptcha'
 require_relative 'workers/email_worker'
 
 class API < Grape::API
+  use GrapeARMiddleware
+
   version 'v1', using: :header, vendor: 'comments'
   format :json
   prefix '/api'
-
-
-  before do
-    ActiveRecord::Base.connection_pool.connections.map(&:verify!)
-  end
-
-  after do
-    ActiveRecord::Base.clear_active_connections!
-  end
-
 
   resource :comments do
 
@@ -56,7 +49,7 @@ class API < Grape::API
 
       begin
         article = Article.find_by_site_id_and_identifier!(site.id, params[:article_identifier])
-        article.visible? ? article.comments.order(:created_at).load : []
+        article.visible? ? article.comments.order(:created_at).to_a : []
       rescue ActiveRecord::RecordNotFound
         []
       end
