@@ -111,10 +111,6 @@ class API < Grape::API
         error!({ "error" => "comment", "error_code" => invalid.record.errors}, 400)
       end
     end
-
-
   end
-
-
 
 end
