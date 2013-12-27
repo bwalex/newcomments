@@ -7,18 +7,6 @@ require_relative 'workers/email_worker'
 class Web < Sinatra::Base
   use Rack::Flash
 
-  before do
-    puts "before"
-    ActiveRecord::Base.connection_pool.connections.map(&:verify!)
-  end
-
-
-  after do
-    puts "after"
-    ActiveRecord::Base.clear_active_connections!
-  end
-
-
   get '/' do
     redirect '/admin'
   end

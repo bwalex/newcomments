@@ -3,31 +3,14 @@ Bundler.require(:default)
 
 require 'securerandom'
 require 'sass/plugin/rack'
-require './config/sass'
+
+require './helpers/rack_ar'
+
+require './init'
 require './web'
 require './api'
 
-
-# Setup mailer
-mailcfg = YAML::load(File.open('config/mail.yml'))
-mailopts = {
-  :from => mailcfg['from'],
-  :via  => mailcfg['via'].to_sym
-}
-
-if (mailcfg['via'].to_sym == :smtp)
-  mailopts[:via_options] = {
-    :address => mailcfg['server']['address'],
-    :port => mailcfg['server']['port'],
-    :enable_starttls_auto => mailcfg['server']['enable_starttls_auto'],
-    :user_name => mailcfg['server']['user_name'],
-    :password => mailcfg['server']['password'],
-    :authentication => mailcfg['server']['authentication']
-  }
-end
-
-Pony.options = mailopts
-
+use RackARMiddleware
 
 use Sass::Plugin::Rack
 
@@ -43,6 +26,5 @@ use Rack::Cors do
     resource '*', headers: :any, methods: [:get, :post]
   end
 end
-
 
 run Rack::Cascade.new [API, Web]

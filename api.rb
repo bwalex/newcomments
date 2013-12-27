@@ -1,13 +1,10 @@
 require 'bundler'
 Bundler.require(:default)
 
-require_relative 'helpers/grape_ar'
 require_relative 'helpers/recaptcha'
 require_relative 'workers/email_worker'
 
 class API < Grape::API
-  use GrapeARMiddleware
-
   version 'v1', using: :header, vendor: 'comments'
   format :json
   prefix '/api'
