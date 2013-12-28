@@ -4,14 +4,11 @@ Bundler.require(:default)
 require 'securerandom'
 require 'sass/plugin/rack'
 
-require './helpers/rack_ar'
-
 require './init'
 require './web'
 require './api'
 
-use RackARMiddleware
-
+use ActiveRecord::ConnectionAdapters::ConnectionManagement
 use Sass::Plugin::Rack
 
 # XXX: consider using Rack::Session::Moneta instead
