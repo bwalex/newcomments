@@ -1,6 +1,3 @@
-require 'bundler'
-Bundler.require(:default)
-
 require 'digest/md5'
 
 require_relative "../helpers/email_validator"

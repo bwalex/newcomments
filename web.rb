@@ -1,6 +1,3 @@
-require 'bundler'
-Bundler.require(:default)
-
 require_relative 'models/users'
 require_relative 'workers/email_worker'
 

@@ -1,6 +1,3 @@
-require 'bundler'
-Bundler.require(:default)
-
 require_relative 'helpers/recaptcha'
 require_relative 'workers/email_worker'
 

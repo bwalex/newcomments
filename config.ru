@@ -1,10 +1,8 @@
-require 'bundler'
-Bundler.require(:default)
+require './init'
 
 require 'securerandom'
 require 'sass/plugin/rack'
 
-require './init'
 require './web'
 require './api'
 

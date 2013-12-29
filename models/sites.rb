@@ -1,6 +1,3 @@
-require 'bundler'
-Bundler.require(:default)
-
 require_relative 'users'
 require_relative 'articles'
 

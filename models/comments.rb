@@ -1,6 +1,3 @@
-require 'bundler'
-Bundler.require(:default)
-
 require 'time'
 
 require_relative 'articles'
