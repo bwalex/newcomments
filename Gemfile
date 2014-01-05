@@ -27,3 +27,12 @@ gem "rack-cors",    "~> 0.2.9", :require => "rack/cors"
 
 gem "sucker_punch", "~> 1.0"
 gem "pony",         "~> 1.5"
+
+group :test do
+  gem "rspec",            "~> 2.14.1"
+  gem "factory_girl",     "~> 4.3.0"
+  gem "database_cleaner", "~> 1.2.0"
+  gem "rack-test",        "~> 0.6.2", :require => "rack/test"
+
+  gem "rubocop",          "~> 0.16.0"
+end
