@@ -1,0 +1,19 @@
+development:
+    adapter:        mysql2
+    host:           localhost
+    username:       root
+    password:       ""
+    database:       newcomments
+    pool:                           5
+    reaping_frequency:              5
+    dead_connection_timeout:        5
+
+test:
+    adapter:        mysql2
+    host:           localhost
+    username:       root
+    password:       ""
+    database:       newcomments_test
+    pool:                           5
+    reaping_frequency:              5
+    dead_connection_timeout:        5

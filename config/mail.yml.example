@@ -1,0 +1,6 @@
+development:
+    from: 'foo@bar.com'
+    via:  'smtp' # or sendmail
+    server:
+        address: 'smtp.foo.bar'
+        port:    '25'
