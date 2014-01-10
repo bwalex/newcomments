@@ -1,3 +1,4 @@
+require_relative '../../models/users'
 
 class DefaultUser < ActiveRecord::Migration
   def self.up

@@ -78,7 +78,7 @@ class API < Grape::API
       end
 
       begin
-        article = Article.find_or_create_by_site_id_and_identifier!(site.id, params[:article_identifier]) do |a|
+        article = Article.find_or_create_by!(site_id: site.id, identifier: params[:article_identifier]) do |a|
           a.site = site
           a.name = params[:article_name]
           a.url = params[:article_url]

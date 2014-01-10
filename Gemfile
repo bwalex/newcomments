@@ -31,8 +31,14 @@ gem "pony",         "~> 1.5"
 group :test do
   gem "rspec",            "~> 2.14.1"
   gem "factory_girl",     "~> 4.3.0"
+  gem "lipsum",           "~> 1.2.0"
   gem "database_cleaner", "~> 1.2.0"
   gem "rack-test",        "~> 0.6.2", :require => "rack/test"
+
+  gem "capybara",         "~> 2.2.1"
+  gem "poltergeist",      "~> 1.5.0"
+
+  gem "simplecov",        "~> 0.8.2"
 
   gem "rubocop",          "~> 0.16.0"
 end
