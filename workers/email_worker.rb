@@ -23,7 +23,7 @@ class NewCommentEmailJob
           puts "Sending mail to #{user.email} with: #{template.result(binding)}"
           Pony.mail(
             :to => user.email,
-            :subject => "New comment on #{site.domain}",
+            :subject => "New comment on #{site.domain}, article: #{article.name}",
             :body => template.result(binding)
           )
         end
