@@ -1,5 +1,6 @@
 workers 1
 preload_app!
+pidfile "puma.pid"
 
 on_worker_boot do
   puts "Rack environment: #{ENV['RACK_ENV']}"
