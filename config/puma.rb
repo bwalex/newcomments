@@ -16,6 +16,6 @@ on_worker_boot do
     @db_cfg = cfg[ENV['RACK_ENV']]
 
     ActiveRecord::Base.establish_connection(@db_cfg)
-    ActiveRecord::Base.logger = Logger.new(STDOUT)
+    ActiveRecord::Base.logger = Logger.new(STDOUT) unless ENV['RACK_ENV'] == 'production'
   end
 end
